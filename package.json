@@ -1,0 +1,68 @@
+{
+    "name": "convertor",
+    "version": "23.5.14",
+    "description": "Hmmmm",
+    "main": "main/index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "cross-env NODE_ENV=development webpack-dev-server",
+        "pc": "cross-env NODE_ENV=development APP_START_URL=http://localhost:3001 electron main/index.js",
+        "dist": "cross-env NODE_ENV=production electron-builder --config electron-builder.json",
+        "build": "cross-env NODE_ENV=production webpack",
+        "lint": "eslint ."
+    },
+    "author": "noooo",
+    "license": "ISC",
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "dependencies": {
+        "clsx": "^1.2.1",
+        "exceljs": "^4.4.0",
+        "formik": "^2.2.9",
+        "immer": "9.0.21",
+        "react": "^17.0.2",
+        "react-custom-scrollbars-2": "^4.5.0",
+        "react-dom": "^17.0.2",
+        "react-transition-group": "^4.4.5"
+    },
+    "devDependencies": {
+        "@babel/core": "7.17.8",
+        "@babel/node": "7.16.8",
+        "@babel/plugin-transform-runtime": "7.18.6",
+        "@babel/preset-env": "7.16.11",
+        "@babel/preset-react": "7.16.7",
+        "@babel/runtime": "7.18.6",
+        "@svgr/webpack": "6.5.1",
+        "babel-loader": "8.2.5",
+        "circular-dependency-plugin": "^5.2.2",
+        "cross-env": "^7.0.3",
+        "css-loader": "^6.7.3",
+        "css-minimizer-webpack-plugin": "3.4.1",
+        "electron": "^22.3.9",
+        "electron-builder": "^23.6.0",
+        "eslint": "^8.40.0",
+        "eslint-plugin-react": "^7.32.2",
+        "file-loader": "^6.2.0",
+        "html-webpack-plugin": "^5.5.1",
+        "mini-css-extract-plugin": "^2.7.5",
+        "sass": "^1.62.1",
+        "sass-loader": "^13.2.2",
+        "style-loader": "^3.3.2",
+        "terser-webpack-plugin": "^5.3.8",
+        "ts-loader": "^9.4.2",
+        "webpack": "^5.82.1",
+        "webpack-bundle-analyzer": "^4.8.0",
+        "webpack-cli": "^5.1.1",
+        "webpack-dev-server": "^4.15.0"
+    }
+}
