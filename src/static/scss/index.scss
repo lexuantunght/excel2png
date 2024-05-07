@@ -22,8 +22,12 @@
         font-size: 14px;
         width: fit-content;
         background-color: #60a5fa;
-        &:hover {
+        &:not(:disabled):hover {
             background-color: #3b82f6;
+        }
+        &:disabled {
+            opacity: 0.6;
+            cursor: default;
         }
     }
     .sheet-sel {
@@ -62,5 +66,34 @@
     background-color: #60a5fa;
     &:not(:disabled):hover {
         background-color: #3b82f6;
+    }
+    &:disabled {
+        opacity: 0.6;
+        cursor: default;
+    }
+}
+
+#data-view {
+    &,
+    th,
+    td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 10px;
+        white-space: pre-line;
+    }
+}
+
+.ok {
+    color: green;
+    a {
+        cursor: pointer;
+        text-decoration: underline;
+        color: #3b82f6;
+        font-weight: 600;
     }
 }

@@ -1,4 +1,4 @@
-const { BrowserWindow, app } = require('electron');
+const { BrowserWindow, app, dialog, ipcMain, shell } = require('electron');
 const url = require('url');
 const path = require('path');
 const config = require('../app.manifest.json');
@@ -9,7 +9,7 @@ class WindowManagerMain {
     constructor() {
         this.windowOptions = {
             width: 560,
-            height: 420,
+            height: 400,
             title: config.title,
             icon: __DEV__
                 ? path.join(__dirname, '/../public/favicon.ico')
@@ -48,6 +48,7 @@ class WindowManagerMain {
         }
         this.mainWindow.loadURL(this._getAppStartUrl());
         this.mainWindow.on('ready-to-show', () => this.mainWindow.show());
+        this._registerListeners();
     }
 
     run() {
@@ -62,6 +63,26 @@ class WindowManagerMain {
             if (this.mainWindow === null) {
                 this.createMainWindow();
             }
+        });
+    }
+
+    _registerListeners() {
+        ipcMain.on('save-dialog', (event, name, ext) => {
+            dialog
+                .showSaveDialog(this.mainWindow, {
+                    title: 'Save File',
+                    defaultPath: name,
+                    filters: [{ name: 'Image', extensions: [ext] }],
+                })
+                .then(({ filePath }) => {
+                    event.reply('save-dialog', filePath);
+                })
+                .catch((e) => {
+                    event.reply('save-dialog-error', e);
+                });
+        });
+        ipcMain.on('open-to-file', (event, path) => {
+            shell.showItemInFolder(path);
         });
     }
 }

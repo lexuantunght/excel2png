@@ -1,27 +1,25 @@
-const { contextBridge } = require('electron');
-const ExcelJS = require('exceljs');
 const fs = require('fs');
+const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('hehe', {
-    excelToPng: async (inputFilePath) => {
-        const workbook = new ExcelJS.Workbook();
-
-        // Load the workbook
-        await workbook.xlsx.readFile(inputFilePath);
-
-        // Assuming the sheet you want to print is the first sheet, you can adjust accordingly
-        const worksheet = workbook.getWorksheet(1);
-
-        // Get the dimensions of the sheet
-        const rowCount = worksheet.rowCount;
-        const columnCount = worksheet.columnCount;
-        const data = Array(rowCount).fill([]);
-
-        // Loop through each cell and draw it on the canvas
-        worksheet.eachRow((row, rowNumber) => {
-            data[rowNumber - 1] = row.values;
+    saveFile: (data, name, ext) => {
+        return new Promise((resolve, reject) => {
+            ipcRenderer.send('save-dialog', name, ext);
+            ipcRenderer.once('save-dialog', async (_, savePath) => {
+                try {
+                    const arrayBuffer = await data.arrayBuffer();
+                    fs.writeFileSync(savePath, Buffer.from(arrayBuffer));
+                    resolve(savePath);
+                } catch (e) {
+                    reject(e);
+                }
+            });
+            ipcRenderer.once('save-dialog-error', (_, e) => {
+                reject(e);
+            });
         });
-
-        return { rowCount, columnCount, data };
+    },
+    openToFile: (path) => {
+        ipcRenderer.send('open-to-file', path);
     },
 });

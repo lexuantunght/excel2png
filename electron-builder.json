@@ -1,7 +1,7 @@
 {
-    "appId": "com.ttkphuong.lis",
-    "productName": "Linear Inequality Solver",
-    "copyright": "ttkphuong",
+    "appId": "com.anonymous.excel2png",
+    "productName": "Excel To Png Convertor",
+    "copyright": "anonymous",
     "files": ["build/**/*", "main/**/*"],
     "mac": {
         "target": "dmg",

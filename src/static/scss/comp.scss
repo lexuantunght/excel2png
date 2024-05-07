@@ -22,6 +22,7 @@
     }
     &__placeholder {
         color: #737373;
+        margin-right: 10px;
     }
     &__indicator {
         width: 18px;
@@ -33,6 +34,8 @@
     &__selected-indicator {
         margin-left: auto;
         color: #3b82f6;
+        width: 18px;
+        height: 18px;
     }
     &__popover {
         min-width: 120px;

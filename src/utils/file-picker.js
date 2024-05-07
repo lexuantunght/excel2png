@@ -65,40 +65,36 @@ class FilePicker {
         return null;
     }
 
-    showWebInputDialog() {
-        return new Promise((resolve, reject) => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = this.config.accepts.map((type) => `.${type}`).join(', ');
-            input.multiple = this.config.multi;
-
-            const handleChange = async () => {
-                if (input.files && input.files.length) {
-                    const errorCode = await this.handleValidateFiles(input.files);
-                    if (errorCode !== null) {
-                        reject(errorCode);
-                    } else {
-                        const result = [];
-                        for (let i = 0; i < input.files.length; i++) {
-                            const file = input.files[i];
-                            result.push(file);
-                        }
-                        resolve(result);
-                    }
-                } else {
-                    reject(ImagePickerErrorCode.CANCELLED);
-                }
-                input.remove();
-            };
-            const handleError = () => {
-                reject(ImagePickerErrorCode.UNKNOWN_ERROR);
-                input.remove();
-            };
-            input.addEventListener('change', handleChange, { once: true });
-            input.addEventListener('error', handleError, { once: true });
-
-            input.click();
+    async showWebInputDialog() {
+        const fHandlers = await showOpenFilePicker({
+            types: [
+                {
+                    description: 'Files',
+                    accept: {
+                        'file/*': this.config.accepts.map((type) => `.${type}`),
+                    },
+                },
+            ],
+            excludeAcceptAllOption: true,
+            multiple: this.config.multi,
         });
+        const files = await Promise.all(fHandlers.map((handler) => handler.getFile()));
+
+        if (files && files.length) {
+            const errorCode = await this.handleValidateFiles(files);
+            if (errorCode !== null) {
+                throw errorCode;
+            } else {
+                const result = [];
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    result.push(file);
+                }
+                return result;
+            }
+        } else {
+            throw ImagePickerErrorCode.CANCELLED;
+        }
     }
 }
 
