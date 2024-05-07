@@ -1,6 +1,6 @@
 {
     "appId": "com.anonymous.excel2png",
-    "productName": "Excel To Png Convertor",
+    "productName": "Excel2PngConvertor",
     "copyright": "anonymous",
     "files": ["build/**/*", "main/**/*"],
     "mac": {

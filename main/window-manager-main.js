@@ -1,7 +1,6 @@
 const { BrowserWindow, app, dialog, ipcMain, shell } = require('electron');
 const url = require('url');
 const path = require('path');
-const config = require('../app.manifest.json');
 
 const __DEV__ = process.env.NODE_ENV === 'development';
 
@@ -10,7 +9,7 @@ class WindowManagerMain {
         this.windowOptions = {
             width: 560,
             height: 400,
-            title: config.title,
+            title: 'This convertor is simple :v',
             icon: __DEV__
                 ? path.join(__dirname, '/../public/favicon.ico')
                 : path.join(__dirname, `/../build/favicon.ico`),
